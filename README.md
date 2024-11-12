@@ -58,7 +58,4 @@ Contributions are welcome! If you'd like to contribute:
  - Create a new branch with a descriptive name.
  - Make your changes and submit a pull request.
 ### License
-
---- 
 This `README.md` provides detailed information on setting up, using, and extending the Biometric Attendance System. Let me know if you need any additional customization!
----
