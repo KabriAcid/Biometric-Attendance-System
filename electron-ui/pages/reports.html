@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="../public/favicon-no-bg.png"
+      type="image/x-icon"
+    />
+    <title>Reports - Biometric Attendance System</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Fixed Header -->
+    <header class="fixed-header bg-white shadow-md">
+      <div class="flex items-center justify-between px-6 h-full">
+        <div class="flex items-center space-x-4">
+          <img
+            src="address.jpg"
+            alt="Company Logo"
+            class="h-12 w-12 rounded-lg object-cover"
+          />
+          <div>
+            <h1 class="text-xl font-bold text-gray-800">
+              AMMAN RICE MILL LIMITED
+            </h1>
+            <p class="text-sm text-gray-600">No. 2A Lambu, Gwarzo Road, Kano</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-500" id="current-time"></span>
+          <div class="flex items-center space-x-2 text-sm text-gray-600">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+              />
+            </svg>
+            <span>Admin</span>
+          </div>
+          <button
+            onclick="logout()"
+            class="text-sm text-red-600 hover:text-red-800 font-medium"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar bg-white">
+      <div class="p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-6">Admin Panel</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="admin-dashboard.html"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"
+            >
+              <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
+                />
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a
+              href="employee-management.html"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"
+            >
+              <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M16 7c0-2.21-1.79-4-4-4S8 4.79 8 7s1.79 4 4 4 4-1.79 4-4zM12 13c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+              Employee Management
+            </a>
+          </li>
+          <li>
+            <a
+              href="attendance-logs.html"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"
+            >
+              <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3V2h-2v2H8V2H6v2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H3V8h14v12z"
+                />
+              </svg>
+              Attendance Logs
+            </a>
+          </li>
+          <li>
+            <a
+              href="reports.html"
+              class="flex items-center px-4 py-3 text-white bg-primary rounded-lg"
+            >
+              <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"
+                />
+              </svg>
+              Reports
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"
+            >
+              <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"
+                />
+              </svg>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content-with-sidebar">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">
+          Reports & Analytics
+        </h1>
+        <p class="text-gray-600">
+          Generate comprehensive attendance reports and analytics
+        </p>
+      </div>
+
+      <!-- Report Generation Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Daily Report -->
+        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+          <div class="flex items-center mb-4">
+            <div
+              class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-blue-600"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3V2h-2v2H8V2H6v2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H3V8h14v12z"
+                />
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold text-gray-800">Daily Report</h3>
+              <p class="text-sm text-gray-600">Today's attendance summary</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <input
+              type="date"
+              id="daily-date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            />
+            <button
+              onclick="generateDailyReport()"
+              class="w-full btn-primary py-2 rounded-lg"
+            >
+              Generate Daily Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Weekly Report -->
+        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+          <div class="flex items-center mb-4">
+            <div
+              class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-green-600"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
+                />
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold text-gray-800">Weekly Report</h3>
+              <p class="text-sm text-gray-600">7-day attendance analysis</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <input
+              type="week"
+              id="weekly-date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            />
+            <button
+              onclick="generateWeeklyReport()"
+              class="w-full btn-primary py-2 rounded-lg"
+            >
+              Generate Weekly Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Monthly Report -->
+        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+          <div class="flex items-center mb-4">
+            <div
+              class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"
+                />
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold text-gray-800">
+                Monthly Report
+              </h3>
+              <p class="text-sm text-gray-600">Complete monthly overview</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <input
+              type="month"
+              id="monthly-date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            />
+            <button
+              onclick="generateMonthlyReport()"
+              class="w-full btn-primary py-2 rounded-lg"
+            >
+              Generate Monthly Report
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Report Builder -->
+      <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-6">
+          Custom Report Builder
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Start Date</label
+            >
+            <input
+              type="date"
+              id="custom-start-date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >End Date</label
+            >
+            <input
+              type="date"
+              id="custom-end-date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Department</label
+            >
+            <select
+              id="custom-department"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            >
+              <option value="">All Departments</option>
+              <option value="Production">Production</option>
+              <option value="Quality Control">Quality Control</option>
+              <option value="Packaging">Packaging</option>
+              <option value="Administration">Administration</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Report Type</label
+            >
+            <select
+              id="custom-report-type"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            >
+              <option value="summary">Summary Report</option>
+              <option value="detailed">Detailed Report</option>
+              <option value="late-arrivals">Late Arrivals</option>
+              <option value="overtime">Overtime Analysis</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-6 flex justify-end space-x-4">
+          <button
+            onclick="previewCustomReport()"
+            class="btn-secondary px-6 py-2 rounded-lg"
+          >
+            Preview Report
+          </button>
+          <button
+            onclick="generateCustomReport()"
+            class="btn-primary px-6 py-2 rounded-lg"
+          >
+            Generate & Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Recent Reports -->
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-6">Recent Reports</h3>
+        <div class="space-y-4">
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"
+              >
+                <svg
+                  class="w-5 h-5 text-blue-600"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-800">
+                  Monthly Report - November 2024
+                </h4>
+                <p class="text-sm text-gray-600">
+                  Generated on Dec 1, 2024 • All Departments
+                </p>
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <button
+                class="text-primary hover:text-gray-800 text-sm font-medium"
+              >
+                Download
+              </button>
+              <button
+                class="text-gray-500 hover:text-gray-800 text-sm font-medium"
+              >
+                View
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"
+              >
+                <svg
+                  class="w-5 h-5 text-green-600"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-800">
+                  Weekly Report - Week 48
+                </h4>
+                <p class="text-sm text-gray-600">
+                  Generated on Nov 30, 2024 • Production Department
+                </p>
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <button
+                class="text-primary hover:text-gray-800 text-sm font-medium"
+              >
+                Download
+              </button>
+              <button
+                class="text-gray-500 hover:text-gray-800 text-sm font-medium"
+              >
+                View
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center"
+              >
+                <svg
+                  class="w-5 h-5 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-800">
+                  Late Arrivals Report - November
+                </h4>
+                <p class="text-sm text-gray-600">
+                  Generated on Nov 29, 2024 • All Departments
+                </p>
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <button
+                class="text-primary hover:text-gray-800 text-sm font-medium"
+              >
+                Download
+              </button>
+              <button
+                class="text-gray-500 hover:text-gray-800 text-sm font-medium"
+              >
+                View
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
+    <script>
+      function logout() {
+        localStorage.removeItem("adminLoggedIn");
+        window.location.href = "admin-login.html";
+      }
+
+      function checkAuth() {
+        const isLoggedIn = localStorage.getItem("adminLoggedIn");
+        if (!isLoggedIn) {
+          window.location.href = "admin-login.html";
+        }
+      }
+
+      function updateDateTime() {
+        const now = new Date();
+        const timeElement = document.getElementById("current-time");
+        if (timeElement) {
+          timeElement.textContent = now.toLocaleTimeString();
+        }
+      }
+
+      function generateDailyReport() {
+        const date = document.getElementById("daily-date").value;
+        if (!date) {
+          alert("Please select a date for the daily report.");
+          return;
+        }
+        alert(`Generating daily report for ${date} - Feature coming soon!`);
+      }
+
+      function generateWeeklyReport() {
+        const week = document.getElementById("weekly-date").value;
+        if (!week) {
+          alert("Please select a week for the weekly report.");
+          return;
+        }
+        alert(`Generating weekly report for ${week} - Feature coming soon!`);
+      }
+
+      function generateMonthlyReport() {
+        const month = document.getElementById("monthly-date").value;
+        if (!month) {
+          alert("Please select a month for the monthly report.");
+          return;
+        }
+        alert(`Generating monthly report for ${month} - Feature coming soon!`);
+      }
+
+      function previewCustomReport() {
+        alert("Previewing custom report - Feature coming soon!");
+      }
+
+      function generateCustomReport() {
+        const startDate = document.getElementById("custom-start-date").value;
+        const endDate = document.getElementById("custom-end-date").value;
+
+        if (!startDate || !endDate) {
+          alert("Please select both start and end dates.");
+          return;
+        }
+
+        alert(
+          `Generating custom report from ${startDate} to ${endDate} - Feature coming soon!`
+        );
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        checkAuth();
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // Set default dates
+        const today = new Date().toISOString().split("T")[0];
+        const thisMonth = new Date().toISOString().slice(0, 7);
+
+        document.getElementById("daily-date").value = today;
+        document.getElementById("monthly-date").value = thisMonth;
+        document.getElementById("custom-start-date").value = today;
+        document.getElementById("custom-end-date").value = today;
+      });
+    </script>
+  </body>
+</html>

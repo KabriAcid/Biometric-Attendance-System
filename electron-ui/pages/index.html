@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="../public/favicon-no-bg.png"
+      type="image/x-icon"
+    />
+    <title>Biometric Attendance System - Amman Rice Mill</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Fixed Header -->
+    <header class="fixed-header bg-white shadow-md">
+      <div class="flex items-center justify-between px-6 h-full">
+        <div class="flex items-center space-x-4">
+          <a href="index.html">
+            <img
+              src="../public/favicon.jpg"
+              alt="Company Logo"
+              class="h-12 w-12 rounded-lg object-cover"
+            />
+          </a>
+          <div>
+            <h1 class="text-xl font-bold text-gray-800">
+              AMMAN RICE MILL LIMITED
+            </h1>
+            <p class="text-sm text-gray-600">No. 2A Lambu, Gwarzo Road, Kano</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-500" id="current-time"></span>
+          <button
+            onclick="window.location.href='admin-login.html'"
+            class="text-sm text-primary hover:text-gray-800 font-medium"
+          >
+            Admin Login
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content-full flex items-center justify-center">
+      <div class="text-center max-w-2xl mx-auto">
+        <!-- Welcome Section -->
+        <div class="mb-12">
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            Welcome to Attendance System
+          </h2>
+          <p class="text-xl text-gray-600 mb-8">
+            Please scan your fingerprint to record your attendance
+          </p>
+        </div>
+
+        <!-- Main Action Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-12 card-hover">
+          <div class="mb-8">
+            <div class="flex justify-center gap-8 mb-6">
+              <div
+                class="w-32 h-32 bg-primary rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-16 h-16 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M17.81 4.47c-.08 0-.16-.02-.23-.06C15.66 3.42 14 3 12.01 3c-1.98 0-3.86.47-5.57 1.41-.24.13-.54.04-.68-.2-.13-.24-.04-.55.2-.68C7.82 2.52 9.86 2 12.01 2c2.13 0 3.99.47 6.03 1.52.25.13.34.43.21.67-.09.18-.26.28-.44.28z"
+                  />
+                  <path
+                    d="M9.75 21.79c-.13 0-.26-.05-.35-.15-.87-.87-.87-2.07 0-2.94l1.37-1.37c.87-.87 2.07-.87 2.94 0l1.37 1.37c.87.87.87 2.07 0 2.94-.87.87-2.07.87-2.94 0L10.1 21.64c-.09.1-.22.15-.35.15zm3.38-2.13c-.25 0-.52-.09-.71-.29l-1.37-1.37c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l1.37 1.37c.39.39.39 1.02 0 1.41-.19.2-.46.29-.7.29z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-16 h-16 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <rect x="11" y="6" width="2" height="8" fill="white" />
+                  <rect x="11" y="15" width="2" height="2" fill="white" />
+                </svg>
+              </div>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">
+              Attendance Actions
+            </h3>
+            <p class="text-gray-600">
+              Choose an option below to clock in or clock out using your
+              fingerprint.
+            </p>
+          </div>
+
+          <div class="flex justify-center gap-8">
+            <button
+              onclick="clockIn()"
+              class="btn-primary text-xl px-10 py-4 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+            >
+              Clock In
+            </button>
+            <button
+              onclick="clockOut()"
+              class="btn-secondary text-xl px-10 py-4 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+              style="background-color: #2563eb; color: white"
+            >
+              Clock Out
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Information -->
+        <div class="mt-8 grid grid-cols-3 gap-6">
+          <div class="bg-white rounded-lg p-6 shadow-md">
+            <div
+              class="text-2xl font-bold text-green-600 mb-2"
+              id="present-count"
+            >
+              0
+            </div>
+            <div class="text-sm text-gray-600">Present Today</div>
+          </div>
+          <div class="bg-white rounded-lg p-6 shadow-md">
+            <div
+              class="text-2xl font-bold text-blue-600 mb-2"
+              id="total-employees"
+            >
+              0
+            </div>
+            <div class="text-sm text-gray-600">Total Employees</div>
+          </div>
+          <div class="bg-white rounded-lg p-6 shadow-md">
+            <div
+              class="text-2xl font-bold text-primary mb-2"
+              id="current-date"
+            ></div>
+            <div class="text-sm text-gray-600">Today's Date</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
+    <script>
+      function clockIn() {
+        window.location.href = "fingerprint-scan.html?type=in";
+      }
+      function clockOut() {
+        window.location.href = "fingerprint-scan.html?type=out";
+      }
+
+      // Update current time and date
+      function updateDateTime() {
+        const now = new Date();
+        const timeElement = document.getElementById("current-time");
+        const dateElement = document.getElementById("current-date");
+
+        if (timeElement) {
+          timeElement.textContent = now.toLocaleTimeString();
+        }
+        if (dateElement) {
+          dateElement.textContent = now.toLocaleDateString();
+        }
+      }
+
+      // Update every second
+      setInterval(updateDateTime, 1000);
+      updateDateTime();
+
+      // Simulate data loading
+      document.addEventListener("DOMContentLoaded", function () {
+        // Simulate loading employee data
+        setTimeout(() => {
+          document.getElementById("present-count").textContent = "23";
+          document.getElementById("total-employees").textContent = "45";
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>

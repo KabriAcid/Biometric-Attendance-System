@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="../public/favicon-no-bg.png"
+      type="image/x-icon"
+    />
+    <title>Attendance Recorded - Biometric Attendance System</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Fixed Header -->
+    <header class="fixed-header bg-white shadow-md">
+      <div class="flex items-center justify-between px-6 h-full">
+        <div class="flex items-center space-x-4">
+          <img
+            src="/images/CompanyLogo.jpg"
+            alt="Company Logo"
+            class="h-12 w-12 rounded-lg object-cover"
+          />
+          <div>
+            <h1 class="text-xl font-bold text-gray-800">
+              AMMAN RICE MILL LIMITED
+            </h1>
+            <p class="text-sm text-gray-600">No. 2A Lambu, Gwarzo Road, Kano</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-500" id="current-time"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content-full flex items-center justify-center">
+      <div class="text-center max-w-2xl mx-auto">
+        <!-- Success Message -->
+        <div class="bg-white rounded-2xl shadow-xl p-12">
+          <div class="mb-8">
+            <div
+              class="w-32 h-32 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce"
+            >
+              <svg
+                class="w-16 h-16 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 class="text-4xl font-bold text-green-600 mb-4">Success!</h2>
+            <p class="text-xl text-gray-600 mb-8">
+              Your attendance has been recorded successfully
+            </p>
+          </div>
+
+          <!-- Attendance Details -->
+          <div class="bg-gray-50 rounded-xl p-8 mb-8">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">
+              Attendance Details
+            </h3>
+            <div class="grid grid-cols-2 gap-6 text-left">
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Employee Name</label
+                >
+                <div
+                  class="text-lg font-semibold text-gray-800"
+                  id="success-employee-name"
+                >
+                  -
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Employee ID</label
+                >
+                <div
+                  class="text-lg font-semibold text-gray-800"
+                  id="success-employee-id"
+                >
+                  -
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Department</label
+                >
+                <div
+                  class="text-lg font-semibold text-gray-800"
+                  id="success-department"
+                >
+                  -
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Time Recorded</label
+                >
+                <div
+                  class="text-lg font-semibold text-gray-800"
+                  id="success-timestamp"
+                >
+                  -
+                </div>
+              </div>
+              <div class="col-span-2">
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Attendance Type</label
+                >
+                <div
+                  class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800"
+                >
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                  <span id="success-type">Clock-In</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex justify-center space-x-4">
+            <button
+              onclick="window.location.href='index.html'"
+              class="btn-primary px-12 py-4 rounded-lg text-lg"
+            >
+              Record New Attendance
+            </button>
+          </div>
+
+          <!-- Auto redirect message -->
+          <div class="mt-8 text-sm text-gray-500">
+            <p>
+              Automatically returning to home screen in
+              <span id="countdown">10</span> seconds...
+            </p>
+            <button
+              onclick="cancelAutoRedirect()"
+              class="text-primary hover:underline ml-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Attendance Summary -->
+        <div class="mt-8 bg-white rounded-xl shadow-md p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+            Today's Summary
+          </h3>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+              <div
+                class="text-2xl font-bold text-green-600"
+                id="today-checkins"
+              >
+                1
+              </div>
+              <div class="text-sm text-gray-600">Check-ins Today</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-blue-600" id="last-checkin">
+                Just now
+              </div>
+              <div class="text-sm text-gray-600">Last Check-in</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-primary" id="work-hours">
+                8.0
+              </div>
+              <div class="text-sm text-gray-600">Hours Today</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
+    <script>
+      let countdownInterval;
+      let countdown = 10;
+
+      function loadAttendanceData() {
+        const attendanceData = JSON.parse(
+          localStorage.getItem("lastAttendance") || "{}"
+        );
+
+        if (attendanceData.employeeName) {
+          document.getElementById("success-employee-name").textContent =
+            attendanceData.employeeName;
+          document.getElementById("success-employee-id").textContent =
+            attendanceData.employeeId;
+          document.getElementById("success-department").textContent =
+            attendanceData.department;
+          document.getElementById("success-timestamp").textContent = new Date(
+            attendanceData.timestamp
+          ).toLocaleString();
+          document.getElementById("success-type").textContent =
+            attendanceData.type;
+        }
+      }
+
+      function startCountdown() {
+        countdownInterval = setInterval(() => {
+          countdown--;
+          document.getElementById("countdown").textContent = countdown;
+
+          if (countdown <= 0) {
+            window.location.href = "index.html";
+          }
+        }, 1000);
+      }
+
+      function cancelAutoRedirect() {
+        clearInterval(countdownInterval);
+        document.querySelector(".mt-8.text-sm.text-gray-500").style.display =
+          "none";
+      }
+
+      // Update current time
+      function updateDateTime() {
+        const now = new Date();
+        const timeElement = document.getElementById("current-time");
+        if (timeElement) {
+          timeElement.textContent = now.toLocaleTimeString();
+        }
+      }
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        loadAttendanceData();
+        startCountdown();
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+      });
+    </script>
+  </body>
+</html>

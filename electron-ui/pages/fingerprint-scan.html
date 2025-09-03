@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="../public/favicon-no-bg.png"
+      type="image/x-icon"
+    />
+    <title>Fingerprint Scan - Biometric Attendance System</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Fixed Header -->
+    <header class="fixed-header bg-white shadow-md">
+      <div class="flex items-center justify-between px-6 h-full">
+        <div class="flex items-center space-x-4">
+          <a href="index.html">
+            <img
+              src="../public/favicon.jpg"
+              alt="Company Logo"
+              class="h-12 w-12 rounded-lg object-cover"
+            />
+          </a>
+          <div>
+            <h1 class="text-xl font-bold text-gray-800">
+              AMMAN RICE MILL LIMITED
+            </h1>
+            <p class="text-sm text-gray-600">No. 2A Lambu, Gwarzo Road, Kano</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-500" id="current-time"></span>
+          <button
+            onclick="window.location.href='index.html'"
+            class="text-sm text-primary hover:text-gray-800 font-medium"
+          >
+            Back to Home
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content-full flex items-center justify-center">
+      <div class="text-center max-w-2xl mx-auto">
+        <!-- Scanning Section -->
+        <div id="scanning-section" class="bg-white rounded-2xl shadow-xl p-12">
+          <div class="mb-8">
+            <div
+              class="w-48 h-48 bg-gradient-to-br from-primary to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 fingerprint-pulse"
+            >
+              <svg
+                class="w-24 h-24 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M17.81 4.47c-.08 0-.16-.02-.23-.06C15.66 3.42 14 3 12.01 3c-1.98 0-3.86.47-5.57 1.41-.24.13-.54.04-.68-.2-.13-.24-.04-.55.2-.68C7.82 2.52 9.86 2 12.01 2c2.13 0 3.99.47 6.03 1.52.25.13.34.43.21.67-.09.18-.26.28-.44.28zM3.5 9.72c-.1 0-.2-.03-.29-.09-.23-.16-.28-.47-.12-.7.99-1.4 2.25-2.5 3.75-3.27C9.98 4.04 14.05 4.04 17.15 5.66c1.5.77 2.76 1.86 3.75 3.27.16.22.11.54-.12.7-.23.16-.54.11-.7-.12-.9-1.28-2.04-2.25-3.39-2.94-2.87-1.47-6.54-1.47-9.4 0-1.36.69-2.5 1.66-3.4 2.94-.08.14-.23.21-.39.21z"
+                />
+                <path
+                  d="M9.75 21.79c-.13 0-.26-.05-.35-.15-.87-.87-.87-2.07 0-2.94l1.37-1.37c.87-.87 2.07-.87 2.94 0l1.37 1.37c.87.87.87 2.07 0 2.94-.87.87-2.07.87-2.94 0L10.1 21.64c-.09.1-.22.15-.35.15zm3.38-2.13c-.25 0-.52-.09-.71-.29l-1.37-1.37c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l1.37 1.37c.39.39.39 1.02 0 1.41-.19.2-.46.29-.7.29z"
+                />
+              </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+              Place Your Finger
+            </h2>
+            <p class="text-xl text-gray-600 mb-6">
+              Position your finger on the scanner and hold steady
+            </p>
+            <div class="text-lg text-primary font-semibold" id="scan-status">
+              Ready to scan...
+            </div>
+          </div>
+
+          <div class="flex justify-center space-x-4">
+            <button
+              onclick="simulateScan()"
+              class="btn-primary px-8 py-3 rounded-lg"
+            >
+              Start Scan
+            </button>
+            <button
+              onclick="window.location.href='index.html'"
+              class="btn-secondary px-8 py-3 rounded-lg"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <!-- User Details Section (Hidden initially) -->
+        <div
+          id="user-details-section"
+          class="bg-white rounded-2xl shadow-xl p-12 hidden"
+        >
+          <div class="mb-8">
+            <div
+              class="w-32 h-32 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+            >
+              <svg
+                class="w-16 h-16 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">
+              Fingerprint Recognized
+            </h2>
+          </div>
+
+          <!-- User Information Card -->
+          <div class="bg-gray-50 rounded-xl p-8 mb-8">
+            <div class="grid grid-cols-2 gap-6 text-left">
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Employee Name</label
+                >
+                <div
+                  class="text-xl font-semibold text-gray-800"
+                  id="employee-name"
+                >
+                  John Doe
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Employee ID</label
+                >
+                <div
+                  class="text-xl font-semibold text-gray-800"
+                  id="employee-id"
+                >
+                  EMP001
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Department</label
+                >
+                <div
+                  class="text-xl font-semibold text-gray-800"
+                  id="employee-department"
+                >
+                  Production
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1"
+                  >Shift</label
+                >
+                <div
+                  class="text-xl font-semibold text-gray-800"
+                  id="employee-shift"
+                >
+                  Morning
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center space-x-4">
+            <button
+              onclick="confirmAttendance()"
+              class="btn-primary px-12 py-4 rounded-lg text-lg"
+            >
+              Confirm Attendance
+            </button>
+            <button
+              onclick="resetScan()"
+              class="btn-secondary px-8 py-4 rounded-lg text-lg"
+            >
+              Scan Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
+    <script>
+      let scanningInterval;
+
+      function simulateScan() {
+        const statusElement = document.getElementById("scan-status");
+        const scanButton = document.querySelector(
+          'button[onclick="simulateScan()"]'
+        );
+
+        scanButton.disabled = true;
+        scanButton.textContent = "Scanning...";
+        statusElement.textContent = "Scanning fingerprint...";
+
+        // Simulate scanning process
+        let progress = 0;
+        scanningInterval = setInterval(() => {
+          progress += 20;
+          statusElement.textContent = `Scanning... ${progress}%`;
+
+          if (progress >= 100) {
+            clearInterval(scanningInterval);
+            setTimeout(() => {
+              showUserDetails();
+            }, 500);
+          }
+        }, 300);
+      }
+
+      function showUserDetails() {
+        document.getElementById("scanning-section").classList.add("hidden");
+        document
+          .getElementById("user-details-section")
+          .classList.remove("hidden");
+
+        // Simulate retrieving user data
+        const employees = [
+          {
+            name: "Ahmad Musa",
+            id: "EMP001",
+            department: "Production",
+            shift: "Morning",
+          },
+          {
+            name: "Fatima Ibrahim",
+            id: "EMP002",
+            department: "Quality Control",
+            shift: "Evening",
+          },
+          {
+            name: "Usman Ali",
+            id: "EMP003",
+            department: "Packaging",
+            shift: "Morning",
+          },
+          {
+            name: "Aisha Garba",
+            id: "EMP004",
+            department: "Administration",
+            shift: "Day",
+          },
+        ];
+
+        const randomEmployee =
+          employees[Math.floor(Math.random() * employees.length)];
+
+        document.getElementById("employee-name").textContent =
+          randomEmployee.name;
+        document.getElementById("employee-id").textContent = randomEmployee.id;
+        document.getElementById("employee-department").textContent =
+          randomEmployee.department;
+        document.getElementById("employee-shift").textContent =
+          randomEmployee.shift;
+      }
+
+      function resetScan() {
+        document.getElementById("user-details-section").classList.add("hidden");
+        document.getElementById("scanning-section").classList.remove("hidden");
+
+        // Reset scan button
+        const scanButton = document.querySelector(
+          'button[onclick="simulateScan()"]'
+        );
+        scanButton.disabled = false;
+        scanButton.textContent = "Start Scan";
+        document.getElementById("scan-status").textContent = "Ready to scan...";
+      }
+
+      function confirmAttendance() {
+        // Store attendance data in localStorage for demo
+        const attendanceData = {
+          employeeName: document.getElementById("employee-name").textContent,
+          employeeId: document.getElementById("employee-id").textContent,
+          department: document.getElementById("employee-department")
+            .textContent,
+          timestamp: new Date().toISOString(),
+          type: "Clock-In",
+        };
+
+        localStorage.setItem("lastAttendance", JSON.stringify(attendanceData));
+        window.location.href = "attendance-success.html";
+      }
+
+      // Update current time
+      function updateDateTime() {
+        const now = new Date();
+        const timeElement = document.getElementById("current-time");
+        if (timeElement) {
+          timeElement.textContent = now.toLocaleTimeString();
+        }
+      }
+
+      setInterval(updateDateTime, 1000);
+      updateDateTime();
+    </script>
+  </body>
+</html>
