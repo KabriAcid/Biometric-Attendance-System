@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class Main {
     private static final String URL = "jdbc:sqlite:attendance.db";
 
@@ -54,6 +53,5 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
-
 
 }
