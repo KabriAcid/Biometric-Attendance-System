@@ -1,0 +1,20 @@
+{
+  "name": "biometric-attendance-system",
+  "version": "1.0.0",
+  "description": "We are building a **Fingerprint-based Attendance System** for a Rice Factory.  \r The stack and requirements are:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KabriAcid/Biometric-Attendance-System.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KabriAcid/Biometric-Attendance-System/issues"
+  },
+  "homepage": "https://github.com/KabriAcid/Biometric-Attendance-System#readme"
+}
